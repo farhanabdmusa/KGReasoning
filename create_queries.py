@@ -38,10 +38,10 @@ def set_global_seed(seed):
 def index_dataset(dataset_name, force=False):
     print('Indexing dataset {0}'.format(dataset_name))
     base_path = 'data/{0}/'.format(dataset_name)
-    # files = ['train.txt', 'valid.txt', 'test.txt']
-    # indexified_files = ['train_indexified.txt', 'valid_indexified.txt', 'test_indexified.txt']
-    files = ['train.txt']
-    indexified_files = ['train_indexified.txt']
+    files = ['train.txt', 'valid.txt', 'test.txt']
+    indexified_files = ['train_indexified.txt', 'valid_indexified.txt', 'test_indexified.txt']
+    # files = ['train.txt']
+    # indexified_files = ['train_indexified.txt']
     return_flag = True
     for i in range(len(indexified_files)):
         if not osp.exists(osp.join(base_path, indexified_files[i])):

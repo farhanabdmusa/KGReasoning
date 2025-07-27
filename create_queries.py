@@ -226,7 +226,7 @@ def ground_queries(dataset, query_structure, ent_in, ent_out, small_ent_in, smal
     logging.info ("{} fp max: {}, min: {}, mean: {}, std: {}".format(mode, np.max(fp_ans_num), np.min(fp_ans_num), np.mean(fp_ans_num), np.std(fp_ans_num)))
     logging.info ("{} fn max: {}, min: {}, mean: {}, std: {}".format(mode, np.max(fn_ans_num), np.min(fn_ans_num), np.mean(fn_ans_num), np.std(fn_ans_num)))
 
-    name_to_save = '%s-%s'%(mode, query_name)
+    name_to_save = '%s'%(query_name)
     with open('./data/%s/%s-queries.pkl'%(dataset, name_to_save), 'wb') as f:
         pickle.dump(queries, f)
     with open('./data/%s/%s-fp-answers.pkl'%(dataset, name_to_save), 'wb') as f:

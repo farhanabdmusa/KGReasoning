@@ -7,3 +7,6 @@ data/
 *.pdf
 *.eps
 submission/
+.venv
+.python-version
+**/.DS_Store

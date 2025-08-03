@@ -156,11 +156,11 @@ def write_links(dataset, ent_out, small_ent_out, max_ans_num, name):
 
     with open('./data/%s/%s-queries.pkl'%(dataset, name), 'wb') as f:
         pickle.dump(queries, f)
-    with open('./data/%s/%s-tp-answers.pkl'%(dataset, name), 'wb') as f:
+    with open('./data/%s/%s-easy-answers.pkl'%(dataset, name), 'wb') as f:
         pickle.dump(tp_answers, f)
-    with open('./data/%s/%s-fn-answers.pkl'%(dataset, name), 'wb') as f:
+    with open('./data/%s/%s-hard-answers.pkl'%(dataset, name), 'wb') as f:
         pickle.dump(fn_answers, f)
-    with open('./data/%s/%s-fp-answers.pkl'%(dataset, name), 'wb') as f:
+    with open('./data/%s/%s-answers.pkl'%(dataset, name), 'wb') as f:
         pickle.dump(fp_answers, f)
     print (num_more_answer)
 
@@ -226,14 +226,14 @@ def ground_queries(dataset, query_structure, ent_in, ent_out, small_ent_in, smal
     logging.info ("{} fp max: {}, min: {}, mean: {}, std: {}".format(mode, np.max(fp_ans_num), np.min(fp_ans_num), np.mean(fp_ans_num), np.std(fp_ans_num)))
     logging.info ("{} fn max: {}, min: {}, mean: {}, std: {}".format(mode, np.max(fn_ans_num), np.min(fn_ans_num), np.mean(fn_ans_num), np.std(fn_ans_num)))
 
-    name_to_save = '%s-%s'%(mode, query_name)
+    name_to_save = mode if query_name == "" else '%s-%s'%(mode, query_name)
     with open('./data/%s/%s-queries.pkl'%(dataset, name_to_save), 'wb') as f:
         pickle.dump(queries, f)
-    with open('./data/%s/%s-fp-answers.pkl'%(dataset, name_to_save), 'wb') as f:
+    with open('./data/%s/%s-answers.pkl'%(dataset, name_to_save), 'wb') as f:
         pickle.dump(fp_answers, f)
-    with open('./data/%s/%s-fn-answers.pkl'%(dataset, name_to_save), 'wb') as f:
+    with open('./data/%s/%s-hard-answers.pkl'%(dataset, name_to_save), 'wb') as f:
         pickle.dump(fn_answers, f)
-    with open('./data/%s/%s-tp-answers.pkl'%(dataset, name_to_save), 'wb') as f:
+    with open('./data/%s/%s-easy-answers.pkl'%(dataset, name_to_save), 'wb') as f:
         pickle.dump(tp_answers, f)
     return queries, tp_answers, fp_answers, fn_answers
 
@@ -270,15 +270,15 @@ def generate_queries(dataset, query_structures, gen_num, max_ans_num, gen_train,
     assert len(query_structures) == 1
     idx = 0
     query_structure = query_structures[idx]
-    query_name = query_names[idx] if save_name else str(idx)
+    query_name = "-"+query_names[idx] if save_name else ""
     print ('general structure is', query_structure, "with name", query_name)
     if query_structure == ['e', ['r']]:
         if gen_train:
-            write_links(dataset, train_ent_out, defaultdict(lambda: defaultdict(set)), max_ans_num, 'train-'+query_name)
+            write_links(dataset, train_ent_out, defaultdict(lambda: defaultdict(set)), max_ans_num, 'train'+query_name)
         if gen_valid:
-            write_links(dataset, valid_only_ent_out, train_ent_out, max_ans_num, 'valid-'+query_name)
+            write_links(dataset, valid_only_ent_out, train_ent_out, max_ans_num, 'valid'+query_name)
         if gen_test:
-            write_links(dataset, test_only_ent_out, valid_ent_out, max_ans_num, 'test-'+query_name)
+            write_links(dataset, test_only_ent_out, valid_ent_out, max_ans_num, 'test'+query_name)
         print ("link prediction created!")
         exit(-1)
     
